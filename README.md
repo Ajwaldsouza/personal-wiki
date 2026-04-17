@@ -18,7 +18,7 @@ The LLM is the librarian. You're the curator.
 ## Install
 
 ```bash
-npx skills add NicholasSpisak/second-brain
+npx skills add Ajwaldsouza/personal-wiki
 ```
 
 This installs six skills into Claude Code:
