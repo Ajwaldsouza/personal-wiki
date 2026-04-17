@@ -19,12 +19,6 @@ The LLM is the librarian. You're the curator.
 npx skills add Ajwaldsouza/personal-wiki
 ```
 
-Then install the slash commands:
-
-```bash
-bash scripts/install-commands.sh
-```
-
 This gives you six `/wiki-*` commands in Claude Code:
 
 | Skill           | What it does                             |

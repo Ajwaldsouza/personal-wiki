@@ -66,17 +66,7 @@ Replace the placeholders:
 
 Write the generated CLAUDE.md to the vault root.
 
-### 3. Install slash commands
-
-Run the install script to register `/wiki-*` commands in Claude Code:
-
-```
-bash <skill-directory>/../../scripts/install-commands.sh
-```
-
-This copies command files to `~/.claude/commands/` so the user can type `/wiki-ingest`, `/wiki-query`, etc. as slash commands.
-
-### 4. Update wiki/log.md
+### 3. Update wiki/log.md
 
 Append the setup entry:
 
@@ -85,7 +75,7 @@ Append the setup entry:
 Created vault "{{VAULT_NAME}}" for {{DOMAIN_DESCRIPTION}}.
 ```
 
-### 5. Print summary
+### 4. Print summary
 
 Show the user:
 
