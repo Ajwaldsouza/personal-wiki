@@ -1,8 +1,6 @@
 # Personal Wiki
 
-An LLM-maintained personal knowledge base built on the [LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f). Drop raw sources into a folder, let the LLM compile them into a structured wiki, and browse it all in Obsidian.
-
-![Personal Wiki Overview](docs/assets/second-brain-overview.png)
+An LLM-maintained personal knowledge base built on the [LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f). Drop raw sources into a folder, let the LLM compile them into a structured wiki, and browse it all in Obsidian!
 
 ## How It Works
 
@@ -21,16 +19,22 @@ The LLM is the librarian. You're the curator.
 npx skills add Ajwaldsouza/personal-wiki
 ```
 
-This installs six skills into Claude Code:
+Then install the slash commands:
 
-| Skill | What it does |
-|---|---|
-| `/wiki-new` | Set up a new vault (guided wizard) |
-| `/wiki-ingest` | Process raw sources into wiki pages |
-| `/wiki-query` | Ask questions against your wiki |
-| `/wiki-lint` | Health-check the wiki |
-| `/wiki-explore` | Discover cross-domain connections |
-| `/wiki-spark` | Generate creative prompts from your wiki |
+```bash
+bash scripts/install-commands.sh
+```
+
+This gives you six `/wiki-*` commands in Claude Code:
+
+| Skill           | What it does                             |
+| --------------- | ---------------------------------------- |
+| `/wiki-new`     | Set up a new vault (guided wizard)       |
+| `/wiki-ingest`  | Process raw sources into wiki pages      |
+| `/wiki-query`   | Ask questions against your wiki          |
+| `/wiki-lint`    | Health-check the wiki                    |
+| `/wiki-explore` | Discover cross-domain connections        |
+| `/wiki-spark`   | Generate creative prompts from your wiki |
 
 ## Quick Start
 
