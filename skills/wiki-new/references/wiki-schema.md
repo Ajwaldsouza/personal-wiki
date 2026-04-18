@@ -35,6 +35,8 @@ Tags are organic — let them emerge naturally from content. Don't force a domai
 
 Use `[[wikilink]]` syntax for all internal links. When you mention a concept, entity, or source that has its own page, link it.
 
+Every factual paragraph on entity, concept, and source summary pages must end with an inline parenthetical citation: `([[Source - Title]])`. When multiple sources support the same paragraph, comma-separate them: `([[Source - A]], [[Source - B]])`.
+
 ## Operations
 
 ### Ingest (processing a new source)
@@ -44,8 +46,8 @@ When the user adds a file to raw/ and asks you to process it:
 1. Read the source completely
 2. Create a source summary page in `wiki/sources/` with: title, source metadata, key claims, and a structured summary
 3. Identify all entities and concepts mentioned. For each:
-   - If a wiki page exists: update it with new information from this source, noting the source
-   - If no wiki page exists and the topic is substantive: create one in the appropriate subdirectory
+   - If a wiki page exists: update it with new information, citing the source inline as `([[Source - Title]])`. Backfill citations on existing uncited paragraphs.
+   - If no wiki page exists and the topic is substantive: create one with inline citations on every paragraph
    - If mentioned only in passing: use a `[[wikilink]]` without creating a page
 4. Add `[[wikilinks]]` between all related pages
 5. Update `wiki/index.md` with any new pages

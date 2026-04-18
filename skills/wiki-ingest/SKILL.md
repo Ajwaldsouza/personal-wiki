@@ -53,7 +53,8 @@ Create a new file in `wiki/sources/` named after the source (slugified). Include
 
     ## Summary
 
-    Structured summary of the source content.
+    Structured summary of the source content. Each paragraph ends with
+    an inline citation to this source: ([[Source - Title]]).
 
     ## Key Claims
 
@@ -77,7 +78,8 @@ For each entity (person, organization, product, tool) and concept (idea, framewo
 
 **If a wiki page already exists:**
 - Read the existing page
-- Add new information from this source
+- Add new information from this source, citing it inline: `([[Source - Title]])`
+- Review existing uncited paragraphs — add citations using the page's `sources:` frontmatter to determine which source each paragraph came from
 - Add the source to the `sources:` frontmatter list
 - Update the `updated:` date
 - Flag any contradictions with existing content using a callout block:
@@ -94,6 +96,7 @@ For each entity (person, organization, product, tool) and concept (idea, framewo
   - `wiki/concepts/` for ideas, frameworks, theories, patterns
 - Include YAML frontmatter with tags, sources, created, and updated fields
 - Write a focused summary based on what this source says about the topic
+- Every paragraph must end with an inline citation: `([[Source - Title]])`
 
 **If the topic is only mentioned in passing:**
 - Use a `[[wikilink]]` without creating a page — the lint pass will flag frequently-mentioned-but-missing pages later
@@ -137,6 +140,28 @@ When processing multiple sources (batch), report aggregate results at the end:
 - When new information contradicts existing wiki content, **add a `> [!warning] Contradiction` callout** with both sources cited.
 - **Prefer updating existing pages** over creating new ones. Only create a new page when the topic is substantive enough to warrant it.
 - Use `[[wikilinks]]` for all internal references. Never use raw file paths.
+
+## Citations
+
+Every factual paragraph on entity, concept, and source summary pages must end with an inline parenthetical citation linking to the source summary page.
+
+- **Format:** `([[Source - Article Title]])` — wikilink to the source page in `wiki/sources/`
+- **Granularity:** Per paragraph — cite at the end of each paragraph
+- **Multiple sources:** Comma-separated — `([[Source - A]], [[Source - B]])`
+- **Updates:** When adding new information to an existing page, cite the new source. Also backfill citations on any existing uncited paragraphs using the page's `sources:` frontmatter.
+- **Source summary pages:** Paragraphs in the Summary section cite the source being summarized.
+
+Example:
+
+```
+Neural networks learn through backpropagation, where error gradients
+flow backward through layers to adjust weights ([[Source - Deep Learning
+Fundamentals]]).
+
+This mechanism mirrors biological feedback loops observed in neural
+plasticity ([[Source - Deep Learning Fundamentals]], [[Source -
+Neuroscience of Learning]]).
+```
 
 ## What's Next
 
