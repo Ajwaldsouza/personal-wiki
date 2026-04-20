@@ -68,8 +68,8 @@ That's OK. The wiki was built from the original content. If you need the origina
 **`wiki/index.md` is out of sync with actual pages.**
 Run `/wiki-lint` — it auto-fixes index consistency issues (missing entries, stale entries).
 
-**Wikilinks are broken after renaming a page.**
-Run `/wiki-lint` — it auto-fixes broken links where the target page exists under a similar name.
+**Wikilinks are broken or unresolved in Obsidian.**
+All wiki page filenames use Title Case to match their wikilink targets (e.g., `Machine Learning.md` for `[[Machine Learning]]`). Source pages include a `Source - ` prefix. Run `/wiki-lint` to detect and auto-fix naming mismatches, including renaming legacy kebab-case files via the Obsidian CLI.
 
 **How do I handle images in clipped articles?**
 In Obsidian, set Settings → Files and links → Attachment folder path to `raw/assets/`. After clipping an article, use "Download attachments for current file" to save images locally.

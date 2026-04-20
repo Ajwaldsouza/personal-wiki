@@ -36,18 +36,22 @@ For books: support both chapter-by-chapter and whole-book ingestion. When ingest
 
 ### 2. Create source summary page
 
-Create a new file in `wiki/sources/` named after the source (slugified). Include:
+Create a new file in `wiki/sources/` named with the `Source - ` prefix and Title Case title. The filename must exactly match the page's H1 heading so that citation wikilinks like `([[Source - Source Title]])` resolve directly in Obsidian.
+
+For example, a source titled "Deep Learning Fundamentals" becomes the file `wiki/sources/Source - Deep Learning Fundamentals.md`. Strip characters invalid in filenames (`: ? * " < > |`) from the title.
+
+Include:
 
     ---
     tags: [relevant, tags]
-    sources: [original-filename.md]
+    sources: [original-raw-filename.md]
     created: YYYY-MM-DD
     updated: YYYY-MM-DD
     ---
 
-    # Source Title
+    # Source - Source Title
 
-    **Source:** original-filename.md
+    **Source:** original-raw-filename.md
     **Date ingested:** YYYY-MM-DD
     **Type:** article | paper | transcript | notes | book | chapter | etc.
 
@@ -94,6 +98,7 @@ For each entity (person, organization, product, tool) and concept (idea, framewo
 - Create a new page in the appropriate subdirectory:
   - `wiki/entities/` for people, organizations, products, tools
   - `wiki/concepts/` for ideas, frameworks, theories, patterns
+- Use the Title Case page title as the filename (e.g., `wiki/entities/OpenAI.md`, `wiki/concepts/Backpropagation.md`). Strip characters invalid in filenames (`: ? * " < > |`).
 - Include YAML frontmatter with tags, sources, created, and updated fields
 - Write a focused summary based on what this source says about the topic
 - Every paragraph must end with an inline citation: `([[Source - Title]])`
@@ -145,7 +150,7 @@ When processing multiple sources (batch), report aggregate results at the end:
 
 Every factual paragraph on entity, concept, and source summary pages must end with an inline parenthetical citation linking to the source summary page.
 
-- **Format:** `([[Source - Article Title]])` — wikilink to the source page in `wiki/sources/`
+- **Format:** `([[Source - Article Title]])` — wikilink to the source page in `wiki/sources/`. The source page file is named `Source - Article Title.md` so this wikilink resolves directly.
 - **Granularity:** Per paragraph — cite at the end of each paragraph
 - **Multiple sources:** Comma-separated — `([[Source - A]], [[Source - B]])`
 - **Updates:** When adding new information to an existing page, cite the new source. Also backfill citations on any existing uncited paragraphs using the page's `sources:` frontmatter.

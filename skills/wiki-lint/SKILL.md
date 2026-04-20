@@ -12,13 +12,30 @@ allowed-tools: Bash Read Write Edit Glob Grep
 
 Health-check the wiki, auto-fix safe issues, and report the rest with actionable fixes.
 
+## Prerequisites
+
+This skill uses the [Obsidian CLI](https://obsidian.md/help/cli) for link verification and file renaming when available. Ensure:
+1. Obsidian is running (CLI requires the app to be active)
+2. The vault setting **"Automatically update internal links"** is enabled (Settings → Files and links)
+3. The CLI is registered (`obsidian help` should work from the terminal)
+
+If the Obsidian CLI is unavailable, fall back to grep-based checks.
+
 ## Audit Steps
 
 Run all checks below, then present a consolidated report.
 
 ### 1. Broken wikilinks
 
-Scan all wiki pages for `[[wikilink]]` references. For each link, verify the target page exists. Report any broken links.
+Use the Obsidian CLI to detect all unresolved wikilinks in the vault:
+
+```bash
+obsidian unresolved verbose
+```
+
+This returns every unresolved link along with the source files that reference it.
+
+**Fallback** (if Obsidian CLI is unavailable): scan all wiki pages with grep:
 
 ```bash
 # Find all wikilinks across wiki pages
@@ -27,13 +44,19 @@ grep -roh '\[\[[^]]*\]\]' wiki/ | sort -u
 
 Cross-reference against actual files in `wiki/`.
 
-**Auto-fix:** If the target page exists under a slightly different name (e.g. case difference, missing hyphen), fix the link automatically.
+**Auto-fix:** If the target page exists under a slightly different name (e.g., kebab-case vs Title Case, missing `Source - ` prefix), rename the file using `obsidian rename` (see Step 8) or fix the wikilink text directly.
 
 ### 2. Orphan pages
 
 Find pages with no inbound links — no other page references them via `[[wikilink]]`.
 
-For each `.md` file in `wiki/sources/`, `wiki/entities/`, `wiki/concepts/`, `wiki/synthesis/`:
+Use the Obsidian CLI:
+
+```bash
+obsidian orphans
+```
+
+**Fallback** (if CLI unavailable): for each `.md` file in `wiki/sources/`, `wiki/entities/`, `wiki/concepts/`, `wiki/synthesis/`:
 - Extract the page name (filename without extension)
 - Search all other wiki pages for `[[Page Name]]`
 - If no other page links to it, it's an orphan
@@ -71,7 +94,43 @@ Verify `wiki/index.md` is complete and accurate:
 
 **Auto-fix:** Add missing index entries. Remove entries pointing to deleted pages.
 
-### 8. Data gaps
+### 8. Naming consistency
+
+Verify all wiki page filenames follow the Title Case convention. The filename (minus `.md`) must exactly match the page's H1 heading and its `[[wikilink]]` target.
+
+List all wiki page files:
+
+```bash
+obsidian files folder=wiki
+```
+
+**Fallback:** `ls wiki/sources/ wiki/entities/ wiki/concepts/ wiki/synthesis/`
+
+For each file, check:
+- **Source pages** (`wiki/sources/`): filename must start with `Source - ` and use Title Case (e.g., `Source - Deep Learning Fundamentals.md`)
+- **Entity pages** (`wiki/entities/`): filename must be Title Case (e.g., `OpenAI.md`)
+- **Concept pages** (`wiki/concepts/`): filename must be Title Case (e.g., `Machine Learning.md`)
+- **Synthesis pages** (`wiki/synthesis/`): filename must be Title Case (e.g., `Comparison Topic.md`)
+
+Any file with kebab-case naming (hyphens between lowercase words, e.g., `machine-learning.md`) is a legacy file that needs renaming.
+
+**Auto-fix (migration):** For each kebab-case file:
+1. Read the file's H1 heading — this is the authoritative Title Case name
+2. For source pages in `wiki/sources/`: prepend `Source - ` to the H1 if not already present, and update the H1 inside the file to match
+3. Rename using the Obsidian CLI:
+   ```bash
+   obsidian rename path="wiki/concepts/machine-learning.md" name="Machine Learning"
+   ```
+   The `rename` command auto-updates all internal `[[wikilinks]]` across the vault (requires "Automatically update internal links" to be enabled in vault settings).
+4. After all renames, verify no broken links remain:
+   ```bash
+   obsidian unresolved total
+   ```
+   This should return 0.
+
+**Fallback** (if CLI unavailable): rename files manually using `mv`, then grep-and-replace all wikilinks that reference the old kebab-case name with the new Title Case name.
+
+### 9. Data gaps
 
 Based on the wiki's current coverage, suggest:
 - Topics mentioned frequently but lacking depth
@@ -84,6 +143,7 @@ Based on the wiki's current coverage, suggest:
 - Missing index entries (add them)
 - Index entries pointing to deleted pages (remove them)
 - Broken wikilinks where the target page exists under a slightly different name (fix the link)
+- Kebab-case filenames that should be Title Case (rename via Obsidian CLI)
 
 **Ask the user before fixing:**
 - Contradictions between pages

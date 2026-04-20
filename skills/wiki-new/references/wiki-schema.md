@@ -26,7 +26,7 @@ Every wiki page MUST include YAML frontmatter:
 
     ---
     tags: [tag1, tag2]
-    sources: [source-filename-1.md, source-filename-2.md]
+    sources: [original-raw-filename.md]
     created: YYYY-MM-DD
     updated: YYYY-MM-DD
     ---
@@ -109,18 +109,22 @@ Each entry in `wiki/log.md`:
 
 ## Page Naming
 
-Filenames use **kebab-case** with `.md` extension. Page titles inside the file use **Title Case**.
+Filenames use **Title Case** with `.md` extension. The filename (minus extension) must exactly match the page's H1 heading and its `[[wikilink]]` target. This ensures wikilinks resolve correctly in Obsidian.
 
-- Source pages: `wiki/sources/article-title-here.md` → `# Article Title Here`
-- Entity pages: `wiki/entities/entity-name.md` → `# Entity Name`
-- Concept pages: `wiki/concepts/concept-name.md` → `# Concept Name`
-- Synthesis pages: `wiki/synthesis/comparison-topic.md` → `# Comparison Topic`
+- Source pages: `wiki/sources/Source - Article Title Here.md` → `# Source - Article Title Here`
+- Entity pages: `wiki/entities/Entity Name.md` → `# Entity Name`
+- Concept pages: `wiki/concepts/Concept Name.md` → `# Concept Name`
+- Synthesis pages: `wiki/synthesis/Comparison Topic.md` → `# Comparison Topic`
 
-When creating `[[wikilinks]]`, use the page title (Title Case), not the filename:
-- Correct: `[[Entity Name]]`
-- Wrong: `[[entity-name]]`
+Source pages use the `Source - ` prefix in both the filename and the H1 heading so that citation wikilinks like `([[Source - Article Title Here]])` resolve directly to the file.
 
-To slugify a title into a filename: lowercase, replace spaces with hyphens, remove special characters, trim to reasonable length.
+Entity, concept, and synthesis filenames do NOT include a prefix — just the Title Case name.
+
+When creating `[[wikilinks]]`, use the exact page title:
+- Correct: `[[Entity Name]]`, `[[Source - Deep Learning Fundamentals]]`
+- Wrong: `[[entity-name]]`, `[[deep-learning-fundamentals]]`
+
+Strip characters that are invalid in filenames (`: ? * " < > |`) from titles when creating the file.
 
 ## Image Handling
 
