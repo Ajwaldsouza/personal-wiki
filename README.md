@@ -21,6 +21,12 @@ npx skills add Ajwaldsouza/personal-wiki
 
 This gives you six `/wiki-*` commands in Claude Code:
 
+## Uninstall
+
+```bash
+npx skills remove -g wiki-new wiki-ingest wiki-query wiki-lint wiki-explore wiki-spark
+```
+
 | Skill           | What it does                             |
 | --------------- | ---------------------------------------- |
 | `/wiki-new`     | Set up a new vault (guided wizard)       |
