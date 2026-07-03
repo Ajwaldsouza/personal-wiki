@@ -18,6 +18,7 @@ mkdir -p "$VAULT_ROOT/wiki/sources"
 mkdir -p "$VAULT_ROOT/wiki/entities"
 mkdir -p "$VAULT_ROOT/wiki/concepts"
 mkdir -p "$VAULT_ROOT/wiki/synthesis"
+mkdir -p "$VAULT_ROOT/wiki/reading"
 mkdir -p "$VAULT_ROOT/output"
 
 # 2. Create wiki/index.md if it doesn't exist
@@ -34,6 +35,8 @@ Master catalog of all wiki pages. Updated on every ingest.
 ## Concepts
 
 ## Synthesis
+
+## Reading
 EOF
   echo "Created wiki/index.md" >&2
 else
@@ -70,6 +73,7 @@ cat << JSONEOF
     "wiki/entities/",
     "wiki/concepts/",
     "wiki/synthesis/",
+    "wiki/reading/",
     "output/"
   ],
   "files": [

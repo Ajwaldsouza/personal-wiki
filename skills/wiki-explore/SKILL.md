@@ -19,9 +19,9 @@ Discover cross-domain connections, analogies, and tensions across the wiki.
 
 Read `wiki/index.md` to get the complete list of all wiki pages across all categories (Sources, Entities, Concepts, Synthesis).
 
-### 2. Read concept and entity pages
+### 2. Read concept, entity, and reading pages
 
-Read all pages in `wiki/concepts/` and `wiki/entities/`. If the wiki is very large (100+ pages), read a representative sample that covers the broadest range of domains and tags.
+Read all pages in `wiki/concepts/` and `wiki/entities/`. Also read the `## Connections` footer of reading copies in `wiki/reading/` — these contain cross-references between sources that share concepts, which can reveal non-obvious connections. If the wiki is very large (100+ pages), read a representative sample that covers the broadest range of domains and tags.
 
 ### 3. Analyze for connections
 

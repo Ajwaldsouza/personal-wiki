@@ -26,9 +26,9 @@ If the index doesn't surface enough relevant pages, use grep to search wiki page
 
 Read the wiki pages identified by the index or search. Follow `[[wikilinks]]` to pull in related context from linked pages. Read enough pages to give a thorough answer, but don't read the entire wiki.
 
-### 4. Check raw sources if needed
+### 4. Check reading copies and raw sources if needed
 
-If the wiki pages don't fully answer the question, check relevant source summaries in `wiki/sources/` for additional detail. Only go to files in `raw/` as a last resort.
+If the wiki pages don't fully answer the question, check annotated reading copies in `wiki/reading/` — they contain the full source text with wikilinks and cross-references that can help trace connections. Check source summaries in `wiki/sources/` for additional detail. Only go to files in `raw/` as a last resort.
 
 ### 5. If the wiki can't answer
 

@@ -130,7 +130,19 @@ Any file with kebab-case naming (hyphens between lowercase words, e.g., `machine
 
 **Fallback** (if CLI unavailable): rename files manually using `mv`, then grep-and-replace all wikilinks that reference the old kebab-case name with the new Title Case name.
 
-### 9. Data gaps
+### 9. Reading copy health
+
+Verify that annotated reading copies in `wiki/reading/` are consistent:
+
+**Missing reading copies:** Check that every ingested source (listed in `wiki/log.md` as an `ingest` entry) has a corresponding reading copy in `wiki/reading/`. Flag any sources that were ingested but have no reading copy.
+
+**Stale reading copies:** For each reading copy, compare its `linked_concepts` and `linked_entities` frontmatter against the current pages in `wiki/concepts/` and `wiki/entities/`. If new wiki pages exist that the reading copy doesn't link to (but the raw source text mentions them), the reading copy is stale and needs regeneration.
+
+**Broken wikilinks in reading copies:** Check that all `[[wikilinks]]` in reading copies resolve to existing wiki pages.
+
+**Auto-fix:** Regenerate stale or missing reading copies by re-running the annotated reading copy process (read the raw source, build link vocabulary from current wiki pages, inject wikilinks, rebuild connections footer).
+
+### 10. Data gaps
 
 Based on the wiki's current coverage, suggest:
 - Topics mentioned frequently but lacking depth

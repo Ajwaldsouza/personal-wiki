@@ -15,6 +15,7 @@ Wiki subdirectories:
 - `wiki/entities/` — pages for people, organizations, products, tools
 - `wiki/concepts/` — pages for ideas, frameworks, theories, patterns
 - `wiki/synthesis/` — comparisons, analyses, cross-cutting themes
+- `wiki/reading/` — annotated reading copies of raw sources with inline wikilinks and cross-references
 
 Two special files:
 - `wiki/index.md` — master catalog of every wiki page, organized by category. Update on every ingest.
@@ -57,6 +58,26 @@ A single source may touch 10-15 wiki pages. That is normal.
 
 When processing multiple sources (batch), process sequentially and report aggregate results.
 
+### Annotated Reading Copy
+
+After ingesting a source, create an annotated reading copy in `wiki/reading/`. This is a copy of the raw source text with inline `[[wikilinks]]` injected wherever known concepts, entities, or sources are mentioned — turning the original article into a connected reading experience.
+
+**Process:**
+1. Take the raw file's full text content
+2. Build a link vocabulary from all page names in `wiki/entities/` and `wiki/concepts/`
+3. Scan the text for mentions (case-insensitive, longest-match-first to avoid partial matches)
+4. Replace the **first occurrence** of each match with a `[[wikilink]]` — subsequent mentions stay as plain text
+5. Append a `## Connections` footer listing:
+   - Source summary link
+   - Key concepts and entities found in the text
+   - Related sources (other reading copies sharing 2+ concepts/entities)
+6. Add YAML frontmatter: `raw_source`, `created`, `linked_concepts`, `linked_entities`
+7. Save to `wiki/reading/Title.md`
+
+**Re-linking:** When new entity or concept pages are created during an ingest, regenerate reading copies for all previously ingested sources so they pick up the new linkable targets.
+
+**Naming:** Reading copy filenames use Title Case matching the source title (e.g., `wiki/reading/Deep Learning Fundamentals.md`). Strip characters invalid in filenames.
+
 ### Query (answering questions)
 
 When the user asks a question:
@@ -98,7 +119,7 @@ Each entry in `wiki/index.md` is one line:
 
     - [[Page Name]] — one-line summary
 
-Organized under category headers: Sources, Entities, Concepts, Synthesis.
+Organized under category headers: Sources, Entities, Concepts, Synthesis, Reading.
 
 ## Log Format
 

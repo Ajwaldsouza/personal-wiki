@@ -57,6 +57,7 @@ your-vault/
 │   ├── entities/           # People, orgs, products, tools
 │   ├── concepts/           # Ideas, frameworks, theories
 │   ├── synthesis/          # Comparisons, analyses, themes
+│   ├── reading/            # Annotated copies of raw sources with wikilinks
 │   ├── index.md            # Master catalog of all pages
 │   └── log.md              # Chronological operation record
 ├── output/                 # Reports and generated artifacts

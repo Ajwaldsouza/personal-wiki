@@ -110,13 +110,60 @@ For each entity (person, organization, product, tool) and concept (idea, framewo
 
 Ensure all related pages link to each other using `[[wikilink]]` syntax. Every mention of an entity or concept that has its own page should be linked.
 
-### 5. Update wiki/index.md
+### 5. Create annotated reading copy
+
+After all wiki pages are created/updated, generate an annotated reading copy of the raw source in `wiki/reading/`.
+
+**Steps:**
+1. Read the raw file's full text content
+2. Build a link vocabulary: list all page names from `wiki/entities/` and `wiki/concepts/` (use `ls` or glob)
+3. Scan the raw text for mentions of these entities and concepts:
+   - Match case-insensitively
+   - Match longest names first (e.g., "Neural Networks" before "Networks") to avoid partial linking
+4. Replace the **first occurrence** of each match with a `[[wikilink]]`. Leave subsequent occurrences as plain text to avoid clutter
+5. Append a `## Connections` footer section:
+
+```
+---
+
+## Connections
+
+**Source summary:** [[Source - Title]]
+
+**Key concepts:** [[Concept A]], [[Concept B]], ...
+
+**Key entities:** [[Entity A]], [[Entity B]], ...
+
+**Related sources:**
+- [[Other Source Title]] — shared: [[Concept X]], [[Entity Y]]
+```
+
+For "Related sources", find other reading copies in `wiki/reading/` that share 2 or more concepts or entities with this source. Read their `linked_concepts` and `linked_entities` frontmatter to determine overlap. List the shared topics.
+
+6. Add YAML frontmatter at the top:
+
+```
+---
+raw_source: raw/original-filename.md
+created: YYYY-MM-DD
+linked_concepts: [Concept A, Concept B]
+linked_entities: [Entity A, Entity B]
+---
+```
+
+7. Save to `wiki/reading/Source Title.md` (Title Case, matching the source title)
+
+**Re-linking older sources:** If this ingest created new entity or concept pages, regenerate reading copies for all previously ingested sources. This ensures older reading copies pick up wikilinks to the newly created pages. Skip regeneration if no new entity/concept pages were created during this ingest.
+
+### 6. Update wiki/index.md
 
 For each new page created, add an entry under the appropriate category header:
 
     - [[Page Name]] — one-line summary (under 120 characters)
 
-### 6. Update wiki/log.md
+For each new reading copy, add an entry under the `## Reading` header.
+
+### 7. Update wiki/log.md
 
 Append:
 
@@ -124,13 +171,15 @@ Append:
     Processed source-filename.md. Created N new pages, updated M existing pages.
     New entities: [[Entity1]], [[Entity2]]. New concepts: [[Concept1]].
 
-### 7. Report results
+### 8. Report results
 
 Tell the user what was done:
 - Pages created (with links)
 - Pages updated (with what changed)
 - New entities and concepts identified
 - Any contradictions found with existing content
+- Reading copy created (with link count and cross-references found)
+- Reading copies regenerated (if new pages triggered re-linking of older sources)
 
 When processing multiple sources (batch), report aggregate results at the end:
 - Total sources processed

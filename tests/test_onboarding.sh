@@ -62,6 +62,7 @@ assert_dir "$TEST_VAULT/wiki/sources"
 assert_dir "$TEST_VAULT/wiki/entities"
 assert_dir "$TEST_VAULT/wiki/concepts"
 assert_dir "$TEST_VAULT/wiki/synthesis"
+assert_dir "$TEST_VAULT/wiki/reading"
 assert_dir "$TEST_VAULT/output"
 
 echo ""
@@ -73,6 +74,7 @@ assert_contains "$TEST_VAULT/wiki/index.md" "## Sources"
 assert_contains "$TEST_VAULT/wiki/index.md" "## Entities"
 assert_contains "$TEST_VAULT/wiki/index.md" "## Concepts"
 assert_contains "$TEST_VAULT/wiki/index.md" "## Synthesis"
+assert_contains "$TEST_VAULT/wiki/index.md" "## Reading"
 
 echo ""
 
